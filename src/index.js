@@ -49,6 +49,8 @@ function onSearch(event) {
         searchQuery = event.currentTarget.elements.searchQuery.value;
         const url = `${API_URL}?key=${API_KEY}&q=${searchQuery}&image_type=photo&orientation=horizontal&safesearch=true&per_page=40&page=${page}`;
         console.log(url);
+        refs.gallery.innerHTML = '';
+        total = 0;
 
         if (onSearch !== '') {
             page = 1;
@@ -60,12 +62,13 @@ function onSearch(event) {
         error = Notify.failure("Sorry, there are no images matching your search query. Please try again.")
     }
 
-    function onLoadMore() {
+function onLoadMore() {
+        
         refs.btnLoadMore.style.display = 'none';
         getImage(searchQuery).then(data => {
             renderCardImage(data.hits);
             refs.btnLoadMore.style.display = 'block';
-            if (page >= 2) {
+            if (page === 2) {
                 console.log(page);
                 Notify.success(`Hooray! We found ${data.totalHits} images.`);
             } else if (total >= totalHits) {
@@ -119,7 +122,7 @@ function onSearch(event) {
             }).join('');
         refs.gallery.insertAdjacentHTML('beforeend', createMarkup);
         const lightbox = new SimpleLightbox('.gallery a', { captionsData: "alt", captionPosition: 'bottom', captionDelay: 250,
-});
+        });
 console.log(lightbox);
     }
 
