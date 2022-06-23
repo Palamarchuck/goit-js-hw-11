@@ -52,18 +52,20 @@ function onSearch(event) {
         refs.gallery.innerHTML = '';
         total = 0;
 
-        if (onSearch !== '') {
+        if (searchQuery !== '') {
             page = 1;
             onLoadMore();
-        }
+    }
+    
     }
 
     function onError(error) {
         error = Notify.failure("Sorry, there are no images matching your search query. Please try again.")
-    }
+}
+    
+
 
 function onLoadMore() {
-        
         refs.btnLoadMore.style.display = 'none';
         getImage(searchQuery).then(data => {
             renderCardImage(data.hits);
@@ -82,7 +84,6 @@ function onLoadMore() {
     }
 
     function renderCardImage(img) {
-        refs.gallery.innerHTML = '';
         const createMarkup = img
             .map(({ webformatURL, largeImageURL, tags, likes, views, comments, downloads }) => {
                 return `
